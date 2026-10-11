@@ -1,0 +1,35 @@
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+public class ThreadPoolRunner {
+    public static void main(String[] args) {
+        // Fixed pool of 3 threads
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+
+        // Submit 10 tasks
+        for (int i = 1; i <= 10; i++) {
+            final int taskId = i;
+            executor.submit(() -> {
+                String threadName = Thread.currentThread().getName();
+                System.out.println("Task " + taskId + " running on " + threadName);
+                try {
+                    Thread.sleep(500); // simulate work
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                System.out.println("Task " + taskId + " completed on " + threadName);
+            });
+        }
+
+        // Shutdown and wait for completion
+        executor.shutdown();
+        try {
+            executor.awaitTermination(5, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("All tasks finished.");
+    }
+}
