@@ -81,6 +81,6 @@ public class CounterRace {
             System.out.printf("Run %d: got %d %s%n", run, actual, ok ? "OK" : "<-- WRONG");
         }
 
-        System.out.println("\nSynchronized version correct in all runs: " + allCorrect);
+        System.out.println("\nSynchronized version correct in all runs:" + allCorrect);
     }
 }
